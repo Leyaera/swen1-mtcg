@@ -12,12 +12,10 @@ import com.kratzer.server.Response;
 import com.google.common.hash.Hashing;
 import java.nio.charset.StandardCharsets;
 import java.util.Date;
-// import java.util.HashMap;
-import java.util.Properties;
-
+// import java.util.Properties;
 // import java.util.List;
 
-public class UserController extends Controller{
+public class UserController extends Controller {
     private UserService userService;
 
     public UserController(UserService userService) {
