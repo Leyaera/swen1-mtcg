@@ -37,11 +37,11 @@ public class UserController extends Controller {
 
                 // token for curl file
                 if (user.getUsername().equals("kienboec")) {
-                    user.setToken("kienboec-e7e0d40d4b4e11797b84327d70d4989690900833a8f6c0fe109d6f469e8ab983");
+                    user.setToken("kienboec-mtcgToken");
                 } else if (user.getUsername().equals("altenhof")) {
-                    user.setToken("altenhof-3e1a1cb4cd6c0cc38b10f1b5a4bab0083bcc963892babc623bf58b6f19973f2c");
+                    user.setToken("altenhof-mtcgToken");
                 } else if (user.getUsername().equals("admin")) {
-                    user.setToken("admin-193b8b736f5225f9ba10a293cc339a5a05f8cc4cd55551553077a4d59bf9b0fa");
+                    user.setToken("admin-mtcgToken");
                 } else {
                     // random token
                     user.setToken(user.getUsername() + "-" + Hashing.sha256().hashString(user.getUsername() + new Date().getTime() + Math.random(), StandardCharsets.UTF_8).toString());

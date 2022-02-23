@@ -38,6 +38,7 @@ public class RequestHandler implements Runnable {
             } else {
                 response = this.app.handleRequest(request);
             }
+
             output.write(response.get());
         } catch (IOException e) {
             System.err.println(Thread.currentThread().getName() + " Error: " + e.getMessage());

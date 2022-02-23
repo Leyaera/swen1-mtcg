@@ -99,16 +99,73 @@ public class CardService implements CardServiceInterface{
     @Override
     public CardInterface addCard(CardInterface card) {
         try {
-            if (this.getCardById(card.getId()) == null) {
+            if (this.getCardById(card.getId()) != null) {
                 return null;
             }
+
+            String cardName = "";
+            String cardType = "";
+            String elementType = "";
+
+            if (card.getName().equals("")) {
+                return null;
+            }
+
+            if (card.getName().equals("WaterGoblin")) {
+                cardName = "Goblin";
+                cardType = "MONSTER";
+                elementType = "WATER";
+            }
+
+            if (card.getName().equals("FireElf")) {
+                cardName = "Elf";
+                cardType = "MONSTER";
+                elementType = "FIRE";
+            }
+
+            if (card.getName().equals("Knight")) {
+                cardName = "Knight";
+                cardType = "MONSTER";
+                elementType = "NORMAL";
+            }
+
+            if (card.getName().equals("Dragon")) {
+                cardName = "Dragon";
+                cardType = "MONSTER";
+                elementType = "NORMAL";
+            }
+
+            if (card.getName().equals("Ork")) {
+                cardName = "Ork";
+                cardType = "MONSTER";
+                elementType = "NORMAL";
+            }
+
+            if (card.getName().equals("FireSpell")) {
+                cardName = "FireSpell";
+                cardType = "SPELL";
+                elementType = "FIRE";
+            }
+
+            if (card.getName().equals("RegularSpell")) {
+                cardName = "RegularSpell";
+                cardType = "SPELL";
+                elementType = "NORMAL";
+            }
+
+            if (card.getName().equals("WaterSpell")) {
+                cardName = "WaterSpell";
+                cardType = "SPELL";
+                elementType = "WATER";
+            }
+
             Connection conn = DatabaseService.getDatabaseService().getConnection();
             PreparedStatement preparedStatement = conn.prepareStatement("INSERT INTO cards(id, cardname, damage, cardtype, elementtype, userid, packageid) VALUES(?,?,?,?,?,?,?);", Statement.RETURN_GENERATED_KEYS);
             preparedStatement.setString(1, card.getId());
-            preparedStatement.setString(2, card.getName());
+            preparedStatement.setString(2, cardName);
             preparedStatement.setFloat(3, card.getDamage());
-            preparedStatement.setString(4, card.getElementType().toString());
-            preparedStatement.setString(5, card.getCardType().toString());
+            preparedStatement.setString(4, cardType);
+            preparedStatement.setString(5, elementType);
             preparedStatement.setNull(6, java.sql.Types.NULL);
             preparedStatement.setNull(7, java.sql.Types.NULL);
 
@@ -150,6 +207,7 @@ public class CardService implements CardServiceInterface{
                             resultSet.getFloat(3),                          // damage
                             ElementType.valueOf(resultSet.getString(5)));   // elementtype
                 }
+                cards.add(card);
             }
             resultSet.close();
             preparedStatement.close();

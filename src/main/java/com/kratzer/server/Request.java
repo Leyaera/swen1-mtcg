@@ -12,5 +12,6 @@ public class Request {
     private String params;
     private String contentType;
     private Integer contentLength;
+    private String authorization;
     private String body = "";
 }

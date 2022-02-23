@@ -80,6 +80,24 @@ public class UserService implements UserServiceInterface {
     }
 
     @Override
+    public UserInterface getUserByToken(String token) {
+        try {
+            Connection conn = DatabaseService.getDatabaseService().getConnection();
+            PreparedStatement preparedStatement = conn.prepareStatement("SELECT id, username, password, token, elo, coins, status FROM users WHERE token = ?;");
+            preparedStatement.setString(1, token);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if(resultSet.next()) {
+                User user = (User) this.getUserById(resultSet.getInt(1));
+                return user;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
     public UserInterface getUserByUsernameWithoutPassword(String username) {
         if (username == null) {
             return null;

@@ -7,6 +7,8 @@ import java.util.List;
 public interface CardPackageInterface {
     int getId();
 
+    void setId(int id);
+
     List<CardInterface> getCards();
 
     int getCost();

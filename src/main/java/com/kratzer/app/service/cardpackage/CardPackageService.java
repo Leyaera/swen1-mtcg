@@ -9,6 +9,7 @@ import com.kratzer.app.service.database.DatabaseService;
 import com.kratzer.app.model.user.UserInterface;
 import com.kratzer.app.service.user.UserService;
 
+import javax.xml.transform.Result;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -61,7 +62,7 @@ public class CardPackageService implements CardPackageServiceInterface{
         try {
             Connection conn = DatabaseService.getDatabaseService().getConnection();
             Statement statement = conn.createStatement();
-            ResultSet resultSet = statement.executeQuery("SELECT id, packagename, cost FROM packages ORER BY RANDOM() LIMIT 1;");
+            ResultSet resultSet = statement.executeQuery("SELECT id, packagename, cost FROM packages ORDER BY RANDOM() LIMIT 1;");
 
             if (resultSet.next()) {
                 CardPackage cardPackage = new CardPackage(
@@ -89,6 +90,11 @@ public class CardPackageService implements CardPackageServiceInterface{
             preparedStatement.setInt(2, cardPackage.getCost());
 
             int affectedRows = preparedStatement.executeUpdate();
+
+            try (ResultSet generatedKeys = preparedStatement.getGeneratedKeys()) {
+                generatedKeys.next();
+                cardPackage.setId((int) generatedKeys.getLong(1));
+            }
 
             preparedStatement.close();
             conn.close();

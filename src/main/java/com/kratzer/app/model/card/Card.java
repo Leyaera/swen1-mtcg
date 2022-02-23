@@ -1,15 +1,19 @@
 package com.kratzer.app.model.card;
 
+import com.fasterxml.jackson.annotation.JsonAlias;
 import lombok.Getter;
 
-public abstract class Card implements com.kratzer.app.model.card.CardInterface {
+public class Card implements com.kratzer.app.model.card.CardInterface {
     @Getter
+    @JsonAlias({"Id"})
     String id;
 
     @Getter
+    @JsonAlias({"Name"})
     String name;
 
     @Getter
+    @JsonAlias({"Damage"})
     float damage;
 
     @Getter
@@ -17,6 +21,10 @@ public abstract class Card implements com.kratzer.app.model.card.CardInterface {
 
     @Getter
     ElementType elementType;
+
+    public Card () {
+
+    }
 
     public Card (String id, String name, float damage, ElementType elementType) {
         this.id = id;

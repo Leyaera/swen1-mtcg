@@ -10,6 +10,8 @@ public interface UserServiceInterface {
 
     UserInterface getUserByUsername(String username);
 
+    UserInterface getUserByToken(String token);
+
     UserInterface getUserByUsernameWithoutPassword(String username);
 
     List<UserInterface> getUsers();

@@ -3,6 +3,7 @@ package com.kratzer.app;
 
 import com.kratzer.app.controller.CardPackageController;
 import com.kratzer.app.controller.UserController;
+import com.kratzer.app.service.card.CardService;
 import com.kratzer.app.service.cardpackage.CardPackageService;
 import com.kratzer.app.service.user.UserService;
 import com.kratzer.http.ContentType;
@@ -18,7 +19,7 @@ public class App implements ServerApp {
 
     public App() {
         this.userController = new UserController(new UserService());
-        this.cardPackageController = new CardPackageController(CardPackageService.getCardPackageService());
+        this.cardPackageController = new CardPackageController(CardPackageService.getCardPackageService(), CardService.getCardService(), UserService.getUserService());
     }
 
     @Override
@@ -32,7 +33,11 @@ public class App implements ServerApp {
         }
 
         if (request.getPathname().equals("/packages") && request.getMethod() == Method.POST) {
-            //return this.cardPackageController.createPackage(request);
+            return this.cardPackageController.createPackage(request);
+        }
+
+        if (request.getPathname().equals("/transactions/packages") && request.getMethod() == Method.POST) {
+            return this.cardPackageController.acquirePackage(request);
         }
 
         return new Response(

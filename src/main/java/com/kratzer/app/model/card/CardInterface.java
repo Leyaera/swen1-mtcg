@@ -12,5 +12,6 @@ public interface CardInterface {
     ElementType getElementType();
 
     float damageAgainst(CardInterface opponentCard);
+
     boolean instantWinsAgainst(CardInterface opponentCard);
 }
