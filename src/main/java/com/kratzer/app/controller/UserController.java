@@ -12,7 +12,7 @@ import com.kratzer.server.Response;
 import com.google.common.hash.Hashing;
 import java.nio.charset.StandardCharsets;
 import java.util.Date;
-import java.util.HashMap;
+// import java.util.HashMap;
 import java.util.Properties;
 
 // import java.util.List;

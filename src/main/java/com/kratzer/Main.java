@@ -1,3 +1,5 @@
+package com.kratzer;
+
 import com.kratzer.app.App;
 import com.kratzer.server.Server;
 
