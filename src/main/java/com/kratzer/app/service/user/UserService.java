@@ -50,6 +50,18 @@ public class UserService implements UserServiceInterface {
         return null;
     }
 
+    @Override
+    public UserInterface getUserByIdWithoutPassword(int id) {
+        if (id == 0) {
+            return null;
+        }
+        User user = (User) this.getUserById(id);
+        user.setPassword(null);
+        user.setToken(null);
+        return user;
+    }
+
+    @Override
     public UserInterface getUserByUsername(String username) {
         try {
             Connection conn = DatabaseService.getDatabaseService().getConnection();
@@ -58,23 +70,24 @@ public class UserService implements UserServiceInterface {
             ResultSet resultSet = preparedStatement.executeQuery();
 
             if(resultSet.next()) {
-                User user = new User(
-                        resultSet.getInt(1),        // id
-                        resultSet.getString(2),     // username
-                        resultSet.getString(3),     // password
-                        resultSet.getString(4),     // token
-                        resultSet.getInt(5),        // elo
-                        resultSet.getInt(6),        // coins
-                        resultSet.getString(7));    // status
-                resultSet.close();
-                preparedStatement.close();
-                conn.close();
+                User user = (User) this.getUserById(resultSet.getInt(1));
                 return user;
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return null;
+    }
+
+    @Override
+    public UserInterface getUserByUsernameWithoutPassword(String username) {
+        if (username == null) {
+            return null;
+        }
+        User user = (User) this.getUserByUsername(username);
+        user.setPassword(null);
+        user.setToken(null);
+        return user;
     }
 
     @Override
@@ -94,22 +107,13 @@ public class UserService implements UserServiceInterface {
             preparedStatement.setString(6, user.getStatus());
 
             int affectedRows = preparedStatement.executeUpdate();
-            if (affectedRows == 0) {
-                return null;
-            }
-
-            /*try {
-                ResultSet generatedKeys = preparedStatement.getGeneratedKeys();
-                if (generatedKeys.next()) {
-                    return this.getUserById(generatedKeys.getInt(1));
-                }
-                generatedKeys.close();
-            } catch (SQLException ignored) {
-
-            }*/
 
             preparedStatement.close();
             conn.close();
+
+            if (affectedRows == 0) {
+                return null;
+            }
             return user;
         } catch (SQLException ignored) {
 
@@ -117,28 +121,84 @@ public class UserService implements UserServiceInterface {
         return null;
     }
 
+    @Override
+    public UserInterface updateUser(int id, UserInterface user) {
+        User userBeforeUpdate = (User) this.getUserById(id);
+        try {
+            Connection conn = DatabaseService.getDatabaseService().getConnection();
+            PreparedStatement preparedStatement = conn.prepareStatement("UPDATE users SET username = ?, password = ?, token = ?, elo = ?, coins = ?, status = ?;");
 
+            preparedStatement.setString(1, user.getUsername() != null ? user.getUsername() : userBeforeUpdate.getUsername());
+            preparedStatement.setString(2, user.getPassword() != null ? user.getPassword() : userBeforeUpdate.getPassword());
+            preparedStatement.setString(3, user.getToken() != null ? user.getToken() : userBeforeUpdate.getToken());
+            preparedStatement.setInt(4, user.getElo());
+            preparedStatement.setInt(5, user.getCoins());
+            preparedStatement.setString(6, user.getStatus() != null ? user.getStatus() : userBeforeUpdate.getStatus());
 
+            int affectedRows = preparedStatement.executeUpdate();
 
+            preparedStatement.close();
+            conn.close();
 
-    /*private List<User> userData;
-
-    public UserService() {
-
-
-        userData = new ArrayList<>();
-        userData.add(new User(1,"Carmen", "abc123", 10));
-        userData.add(new User(2,"Steffi", "abc123",10));
-        userData.add(new User(3,"Obaid", "abc123", 10));
+            if (affectedRows == 0) {
+                return null;
+            }
+            return this.getUserById(id);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
-    // POST /users
-    public void addUser(User user) {
-        userData.add(user);
+    @Override
+    public boolean deleteUser(int id) {
+        try {
+            Connection conn = DatabaseService.getDatabaseService().getConnection();
+            PreparedStatement preparedStatement = conn.prepareStatement("DELETE FROM users WHERE id = ?;");
+
+            preparedStatement.setInt(1, id);
+
+            int affectedRows = preparedStatement.executeUpdate();
+
+            preparedStatement.close();
+            conn.close();
+
+            if (affectedRows == 0) {
+                return false;
+            }
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 
-    // GET /users
-    public List<User> getUsers() {
-        return userData;
-    }*/
+    @Override
+    public List<UserInterface> getUsers() {
+        try {
+            Connection conn = DatabaseService.getDatabaseService().getConnection();
+            Statement statement = conn.createStatement();
+            ResultSet resultSet = statement.executeQuery("SELECT id, username, password, token, elo, coins, status FROM users;");
+
+            List<UserInterface> users = new ArrayList<>();
+            while(resultSet.next()) {
+                users.add(new User(
+                        resultSet.getInt(1),        // id
+                        resultSet.getString(2),     // username
+                        resultSet.getString(3),     // password
+                        resultSet.getString(4),     // token
+                        resultSet.getInt(5),        // elo
+                        resultSet.getInt(6),        // coins
+                        resultSet.getString(7)));   // status
+            }
+
+            statement.close();
+            resultSet.close();
+            conn.close();
+            return users;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 }

@@ -4,7 +4,7 @@ import lombok.Getter;
 
 public abstract class Card implements com.kratzer.app.model.card.CardInterface {
     @Getter
-    int id;
+    String id;
 
     @Getter
     String name;
@@ -18,7 +18,7 @@ public abstract class Card implements com.kratzer.app.model.card.CardInterface {
     @Getter
     ElementType elementType;
 
-    public Card (int id, String name, float damage, ElementType elementType) {
+    public Card (String id, String name, float damage, ElementType elementType) {
         this.id = id;
         this.name = name;
         this.damage = damage;
