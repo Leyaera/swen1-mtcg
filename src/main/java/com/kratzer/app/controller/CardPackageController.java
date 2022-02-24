@@ -1,6 +1,5 @@
 package com.kratzer.app.controller;
 
-import com.google.common.hash.Hashing;
 import com.kratzer.app.model.card.Card;
 import com.kratzer.app.model.card.CardInterface;
 import com.kratzer.app.model.cardpackage.CardPackage;
@@ -16,7 +15,6 @@ import com.kratzer.server.Response;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 
-import java.nio.charset.StandardCharsets;
 import java.util.*;
 
 public class CardPackageController extends Controller {
@@ -41,7 +39,7 @@ public class CardPackageController extends Controller {
                         "Unauthorized"
                 );
             }
-            // request.getBody() => "{ \"id\": 4, \"username\": \"Username\", ... }
+
             Card[] cards = this.getObjectMapper().readValue(request.getBody(), Card[].class);
             CardPackage cardPackage = new CardPackage();
             cardPackage.setCards(Arrays.asList(cards));
@@ -90,7 +88,7 @@ public class CardPackageController extends Controller {
             );
         }
 
-        CardPackageInterface cardPackage = cardPackageService.getRandomCardPackage();
+        CardPackageInterface cardPackage = cardPackageService.getCardPackageInOrder();
 
         if (cardPackage!= null) {
             if (user.getCoins() < cardPackage.getCost()) {

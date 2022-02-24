@@ -228,7 +228,7 @@ public class CardService implements CardServiceInterface{
     public List<CardInterface> getCardsForUser(UserInterface user) {
         try {
             Connection conn = DatabaseService.getDatabaseService().getConnection();
-            PreparedStatement preparedStatement = conn.prepareStatement("SELECT id, name, damage, cardtype, elementtype FROM cards WHERE userid = ?;");
+            PreparedStatement preparedStatement = conn.prepareStatement("SELECT id, cardname, damage, cardtype, elementtype, userid, indeck FROM cards WHERE userid = ?;");
             preparedStatement.setInt(1, user.getId());
             ResultSet resultSet = preparedStatement.executeQuery();
 
@@ -248,6 +248,7 @@ public class CardService implements CardServiceInterface{
                             resultSet.getFloat(3),                          // damage
                             ElementType.valueOf(resultSet.getString(5)));   // elementtype
                 }
+                cards.add(card);
             }
 
             resultSet.close();

@@ -32,6 +32,30 @@ public class CardPackageService implements CardPackageServiceInterface{
     }
 
     @Override
+    public CardPackageInterface getCardPackageInOrder () {
+        try {
+            Connection conn = DatabaseService.getDatabaseService().getConnection();
+            Statement statement = conn.createStatement();
+            ResultSet resultSet = statement.executeQuery("SELECT id, packagename, cost FROM packages ORDER BY id ASC LIMIT 1;");
+
+            if (resultSet.next()) {
+                CardPackage cardPackage = new CardPackage(
+                        resultSet.getInt(1),        // id
+                        resultSet.getString(2),     // packagename
+                        resultSet.getInt(3)         // cost
+                );
+                resultSet.close();
+                statement.close();
+                conn.close();
+                return cardPackage;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
     public CardPackageInterface getCardPackageById (int id) {
         try {
             Connection conn = DatabaseService.getDatabaseService().getConnection();

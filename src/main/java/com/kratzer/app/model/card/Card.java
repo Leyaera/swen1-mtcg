@@ -25,6 +25,9 @@ public class Card implements com.kratzer.app.model.card.CardInterface {
     @Getter
     ElementType elementType;
 
+    @Getter
+    boolean inDeck = false;
+
     public Card () {
 
     }

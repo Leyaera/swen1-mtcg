@@ -8,6 +8,8 @@ import java.util.List;
 public interface CardPackageServiceInterface {
     CardPackageInterface getCardPackageById (int id);
 
+    CardPackageInterface getCardPackageInOrder();
+
     CardPackageInterface getRandomCardPackage();
 
     List<CardPackageInterface> getCardPackages();

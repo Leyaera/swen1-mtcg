@@ -13,6 +13,8 @@ public interface CardInterface {
 
     ElementType getElementType();
 
+    boolean isInDeck();
+
     float damageAgainst(CardInterface opponentCard);
 
     boolean instantWinsAgainst(CardInterface opponentCard);
