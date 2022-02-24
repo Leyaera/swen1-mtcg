@@ -40,6 +40,8 @@ public class App implements ServerApp {
             return this.cardPackageController.acquirePackage(request);
         }
 
+
+
         return new Response(
                 HttpStatus.BAD_REQUEST,
                 ContentType.JSON,

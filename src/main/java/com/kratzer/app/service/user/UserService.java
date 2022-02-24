@@ -82,6 +82,9 @@ public class UserService implements UserServiceInterface {
     @Override
     public UserInterface getUserByToken(String token) {
         try {
+            if (token.equals("")) {
+                return null;
+            }
             Connection conn = DatabaseService.getDatabaseService().getConnection();
             PreparedStatement preparedStatement = conn.prepareStatement("SELECT id, username, password, token, elo, coins, status FROM users WHERE token = ?;");
             preparedStatement.setString(1, token);
@@ -144,7 +147,7 @@ public class UserService implements UserServiceInterface {
         User userBeforeUpdate = (User) this.getUserById(id);
         try {
             Connection conn = DatabaseService.getDatabaseService().getConnection();
-            PreparedStatement preparedStatement = conn.prepareStatement("UPDATE users SET username = ?, password = ?, token = ?, elo = ?, coins = ?, status = ?;");
+            PreparedStatement preparedStatement = conn.prepareStatement("UPDATE users SET username = ?, password = ?, token = ?, elo = ?, coins = ?, status = ? WHERE id = ?;");
 
             preparedStatement.setString(1, user.getUsername() != null ? user.getUsername() : userBeforeUpdate.getUsername());
             preparedStatement.setString(2, user.getPassword() != null ? user.getPassword() : userBeforeUpdate.getPassword());
@@ -152,6 +155,7 @@ public class UserService implements UserServiceInterface {
             preparedStatement.setInt(4, user.getElo());
             preparedStatement.setInt(5, user.getCoins());
             preparedStatement.setString(6, user.getStatus() != null ? user.getStatus() : userBeforeUpdate.getStatus());
+            preparedStatement.setInt(7, id);
 
             int affectedRows = preparedStatement.executeUpdate();
 

@@ -158,7 +158,12 @@ public class CardPackageService implements CardPackageServiceInterface{
 
     @Override
     public boolean assignCardPackageToUser(CardPackageInterface cardPackage, UserInterface user) {
-        if (user.getCoins() < cardPackage.getCost()) return false;
+        if (cardPackage == null) {
+            return false;
+        }
+        if (user.getCoins() < cardPackage.getCost()) {
+            return false;
+        }
 
         user.setCoins(user.getCoins() - cardPackage.getCost());
         userService.updateUser(user.getId(), user);

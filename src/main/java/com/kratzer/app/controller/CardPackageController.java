@@ -91,10 +91,17 @@ public class CardPackageController extends Controller {
         }
 
         CardPackageInterface cardPackage = cardPackageService.getRandomCardPackage();
-        cardPackageService.assignCardPackageToUser(cardPackage, user);
-        cardPackageService.deleteCardPackageById(cardPackage.getId());
 
         if (cardPackage!= null) {
+            if (user.getCoins() < cardPackage.getCost()) {
+                return new Response(
+                        HttpStatus.BAD_REQUEST,
+                        ContentType.JSON,
+                        "{ message: \"Not enough coins.\" }"
+                );
+            }
+            cardPackageService.assignCardPackageToUser(cardPackage, user);
+            cardPackageService.deleteCardPackageById(cardPackage.getId());
             return new Response(
                     HttpStatus.OK,
                     ContentType.JSON,
@@ -104,7 +111,7 @@ public class CardPackageController extends Controller {
             return new Response(
                     HttpStatus.BAD_REQUEST,
                     ContentType.JSON,
-                    "{ message: \"Assigning package to user failed\" }"
+                    "{ message: \"No package left to purchase.\" }"
             );
         }
     }

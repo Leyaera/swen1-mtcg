@@ -14,4 +14,6 @@ public interface CardInterface {
     float damageAgainst(CardInterface opponentCard);
 
     boolean instantWinsAgainst(CardInterface opponentCard);
+
+    boolean isImmune();
 }
