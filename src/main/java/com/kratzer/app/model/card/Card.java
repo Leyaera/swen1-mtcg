@@ -42,11 +42,13 @@ public class Card implements com.kratzer.app.model.card.CardInterface {
     @Override
     public boolean isImmune() {
         int min = 0;
-        int max = 100;
+        int max = 200;
 
         Random random = new Random();
         int lucky = random.nextInt(max + min) + min;
-        if (lucky > 97) {
+
+
+        if (lucky > 199) {
             return true;
         }
         return false;
@@ -81,9 +83,9 @@ public class Card implements com.kratzer.app.model.card.CardInterface {
     @Override
     public boolean instantWinsAgainst(CardInterface opponentCard) {
         // SPECIAL FEATURE
-        /*if (isImmune()) {
+        if (isImmune() && !opponentCard.isImmune()) {
             return true;
-        }*/
+        }
         // MONSTER vs MONSTER
         if (CardType.MONSTER.equals(this.getCardType()) && CardType.MONSTER.equals(opponentCard.getCardType())) {
             // Goblins are too afraid of Dragons to attack

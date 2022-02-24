@@ -44,9 +44,14 @@ class MonsterCardTest {
 
         // act
         boolean win = waterSpell.instantWinsAgainst(knight);
+        boolean oppIsLucky = knight.isImmune();
 
         // assert
-        assertTrue(win);
+        if (oppIsLucky) {
+            assertFalse(win);
+        } else {
+            assertTrue(win);
+        }
     }
 
     @Test
@@ -58,9 +63,14 @@ class MonsterCardTest {
 
         // act
         boolean win = dragon.instantWinsAgainst(goblin);
+        boolean oppIsLucky = goblin.isImmune();
 
         // assert
-        assertTrue(win);
+        if (oppIsLucky) {
+            assertFalse(win);
+        } else {
+            assertTrue(win);
+        }
     }
 
     @Test
@@ -72,9 +82,14 @@ class MonsterCardTest {
 
         // act
         boolean win = wizzard.instantWinsAgainst(ork);
+        boolean oppIsLucky = ork.isImmune();
 
         // assert
-        assertTrue(win);
+        if (oppIsLucky) {
+            assertFalse(win);
+        } else {
+            assertTrue(win);
+        }
     }
 
     @Test
@@ -86,9 +101,14 @@ class MonsterCardTest {
 
         // act
         boolean win = kraken.instantWinsAgainst(spellCard);
+        boolean oppIsLucky = spellCard.isImmune();
 
         // assert
-        assertTrue(win);
+        if (oppIsLucky) {
+            assertFalse(win);
+        } else {
+            assertTrue(win);
+        }
     }
 
     @Test
@@ -100,9 +120,14 @@ class MonsterCardTest {
 
         // act
         boolean win = fireElf.instantWinsAgainst(dragon);
+        boolean oppIsLucky = dragon.isImmune();
 
         // assert
-        assertTrue(win);
+        if (oppIsLucky) {
+            assertFalse(win);
+        } else {
+            assertTrue(win);
+        }
     }
 
     @Test
