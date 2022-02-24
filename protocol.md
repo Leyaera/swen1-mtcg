@@ -59,6 +59,17 @@ tests authorization both with correct AND incorrect passwords to make sure, the 
   * *testUpdateUser()*
   * *testDeleteUser()*
 
+### NOT IMPLEMENTED
+
+## - Methods partially written but never used and executed :|
+* updates on user data
+* specialities in battle-rounds between cards implemented in Card.java
+
+## -- no code at all :(
+* majority of battle logic due to an unlucky incident with a crashing computer and 2 weeks of spending waiting for the repair 
+* trading
+* score board
+* profile page
 
 ## Time log
 
