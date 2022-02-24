@@ -2,10 +2,12 @@ package com.kratzer.app.model.card;
 
 import com.fasterxml.jackson.annotation.JsonAlias;
 import lombok.Getter;
+import lombok.Setter;
 import java.util.Random;
 
 public class Card implements com.kratzer.app.model.card.CardInterface {
     @Getter
+    @Setter
     @JsonAlias({"Id"})
     String id;
 
@@ -86,8 +88,8 @@ public class Card implements com.kratzer.app.model.card.CardInterface {
                 return true;
             }
 
-            // Wizard can control Orcs, so they are not able to damage them
-            if ("Wizard".equals(this.getName()) && "Ork".equals(opponentCard.getName())) {
+            // Wizzard can control Orcs, so they are not able to damage them
+            if ("Wizzard".equals(this.getName()) && "Ork".equals(opponentCard.getName())) {
                 return true;
             }
 

@@ -11,6 +11,7 @@ public class User implements UserInterface{
     int id = 0;
 
     @Getter
+    @Setter
     @JsonAlias({"Username"})
     String username;
 

@@ -174,6 +174,11 @@ public class CardService implements CardServiceInterface{
                 return null;
             }
 
+            try (ResultSet generatedKeys = preparedStatement.getGeneratedKeys()) {
+                generatedKeys.next();
+                card.setId(generatedKeys.getString(1));
+            }
+
             preparedStatement.close();
             conn.close();
             return card;

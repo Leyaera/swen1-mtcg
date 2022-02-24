@@ -3,6 +3,8 @@ package com.kratzer.app.model.card;
 public interface CardInterface {
     String getId();
 
+    void setId(String id);
+
     String getName();
 
     float getDamage();

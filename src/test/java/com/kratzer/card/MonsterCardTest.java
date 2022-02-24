@@ -1,14 +1,12 @@
-package com.kratzer.app.model.card;
+package com.kratzer.card;
 
+import com.kratzer.app.model.card.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class MonsterCardTest {
-    @Mock
-    CardInterface cardMock;
-
     @Test
     @DisplayName("MonsterCard should be MONSTER")
     void testGetCardTypeMonster() {
@@ -109,15 +107,71 @@ class MonsterCardTest {
 
     @Test
     @DisplayName("Element Type does not effect pure monster fights")
-    void testDamageAgainst() {
+    void testDamageAgainstPureMonster() {
         // arrange
         Card monsterCard1 = new MonsterCard ("", "MonsterCard1", 10, ElementType.WATER);
-        Card monsterCard2 = new MonsterCard ("", "MonsterCard2", 20, ElementType.FIRE);
+        Card monsterCard2 = new MonsterCard ("", "MonsterCard2", 10, ElementType.FIRE);
 
         // act
-        float monster1Damage = monsterCard1.damageAgainst(monsterCard2);
+        float damage = monsterCard1.damageAgainst(monsterCard2);
 
         // assert
-        assertEquals(10, monster1Damage);
+        assertEquals(10, damage);
+    }
+
+    @Test
+    @DisplayName("A WaterSpell is effective against ElementType FIRE")
+    void testDamageAgainstWaterSpellFire() {
+        // arrange
+        Card spellCard = new SpellCard ("", "WaterSpell", 10, ElementType.WATER);
+        Card monsterCard = new MonsterCard ("", "FireMonster", 10, ElementType.FIRE);
+
+        // act
+        float damage = spellCard.damageAgainst(monsterCard);
+
+        // assert
+        assertEquals(20, damage);
+    }
+
+    @Test
+    @DisplayName("A FireSpell is effective against ElementType NORMAL")
+    void testDamageAgainstFireSpellNormal() {
+        // arrange
+        Card spellCard1 = new SpellCard ("", "FireSpell", 10, ElementType.FIRE);
+        Card spellCard2 = new SpellCard ("", "NormalSpell", 10, ElementType.NORMAL);
+
+        // act
+        float damage = spellCard1.damageAgainst(spellCard2);
+
+        // assert
+        assertEquals(20, damage);
+    }
+
+    @Test
+    @DisplayName("A NormalSpell is effective against ElementType WATER")
+    void testDamageAgainstNormalSpellWater() {
+        // arrange
+        Card spellCard1 = new SpellCard ("", "NormalSpell", 10, ElementType.NORMAL);
+        Card spellCard2 = new SpellCard ("", "WaterSpell", 10, ElementType.WATER);
+
+        // act
+        float damage = spellCard1.damageAgainst(spellCard2);
+
+        // assert
+        assertEquals(20, damage);
+    }
+
+    @Test
+    @DisplayName("A FireSpell is not effective against ElementType WATER")
+    void testDamageAgainstNormalSpellFire() {
+        // arrange
+        Card spellCard1 = new SpellCard ("", "FireSpell", 10, ElementType.FIRE);
+        Card spellCard2 = new SpellCard ("", "WaterSpell", 10, ElementType.WATER);
+
+        // act
+        float damage = spellCard1.damageAgainst(spellCard2);
+
+        // assert
+        assertEquals(5, damage);
     }
 }
