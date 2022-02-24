@@ -5,7 +5,9 @@ https://github.com/Leyaera/swen1-mtcg
 
 ## Design Ideas
 
-The one "design" idea I think is worth writing about is my decision to implement the battle logic directly in the Card class. 
+* Credits where credits are due: the base of the HTTP server structure and code has been taken from the HTTP server file provided in the SWEN1 Moodle Course. 
+
+* The one "design" idea I think is worth writing about is my decision to implement the battle logic directly in the Card class. 
 By using the "instantWinsAgainst()" method in the card class the game already determines instant wins or loses. 
 Furthermore, I decided to also implement the second part of the battle logic concerning the effects of element types when spell cards are involved in the fight. The *damageAgainst()* method immediately calculates the damage of the card, depending on the element and card type.
 
