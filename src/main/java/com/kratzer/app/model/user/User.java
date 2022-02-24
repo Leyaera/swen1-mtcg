@@ -6,6 +6,7 @@ import lombok.Setter;
 
 public class User implements UserInterface{
     @Getter
+    @Setter
     @JsonAlias({"id"})
     int id = 0;
 

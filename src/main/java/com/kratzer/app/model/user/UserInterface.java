@@ -3,6 +3,8 @@ package com.kratzer.app.model.user;
 public interface UserInterface {
     int getId();
 
+    void setId(int id);
+
     String getUsername();
 
     String getPassword();

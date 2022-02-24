@@ -129,6 +129,11 @@ public class UserService implements UserServiceInterface {
 
             int affectedRows = preparedStatement.executeUpdate();
 
+            try (ResultSet generatedKeys = preparedStatement.getGeneratedKeys()) {
+                generatedKeys.next();
+                user.setId((int) generatedKeys.getLong(1));
+            }
+
             preparedStatement.close();
             conn.close();
 

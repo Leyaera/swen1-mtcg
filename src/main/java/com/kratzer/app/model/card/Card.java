@@ -44,7 +44,6 @@ public class Card implements com.kratzer.app.model.card.CardInterface {
         if (lucky > 97) {
             return true;
         }
-
         return false;
     }
 
@@ -77,9 +76,9 @@ public class Card implements com.kratzer.app.model.card.CardInterface {
     @Override
     public boolean instantWinsAgainst(CardInterface opponentCard) {
         // SPECIAL FEATURE
-        if (isImmune()) {
+        /*if (isImmune()) {
             return true;
-        }
+        }*/
         // MONSTER vs MONSTER
         if (CardType.MONSTER.equals(this.getCardType()) && CardType.MONSTER.equals(opponentCard.getCardType())) {
             // Goblins are too afraid of Dragons to attack

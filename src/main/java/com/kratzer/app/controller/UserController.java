@@ -33,7 +33,7 @@ public class UserController extends Controller {
             if (user != null && user.getUsername() != null && user.getPassword() != null) {
                 user.setCoins(20);
                 user.setElo(100);
-                user.setStatus(("online"));
+                user.setStatus(("offline"));
 
                 // token for curl file
                 if (user.getUsername().equals("kienboec")) {
@@ -54,6 +54,8 @@ public class UserController extends Controller {
 
                 user = (User) this.userService.addUser(user);
                 if (user != null) {
+                    user.setStatus("online");
+                    this.userService.updateUser(user.getId(), user);
                     return new Response(
                             HttpStatus.CREATED,
                             ContentType.JSON,
